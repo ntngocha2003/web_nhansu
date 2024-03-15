@@ -1,0 +1,63 @@
+.error-message{
+    color: red;
+    font-size: 1.2rem;
+    margin-top: 5px;
+    font-style: italic;
+}
+.mt20{
+    margin-top: 20px;
+}
+.uk-flex-space-between{
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.uk-flex-middle{
+    -ms-flex-align: center;
+    align-items: center;
+}
+.uk-flex{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display:flex;
+}
+
+.filter-wrapper .perpage{
+    display: inline-block;
+}
+.btn{
+    margin-bottom: 0;
+    font-size: 12px;
+    height: 32px;
+}
+.filter-wrapper{
+    margin-bottom: 20px;
+}
+.filter-wrapper .form-control{
+    height: 32px;
+    max-width: 200px;
+    margin-bottom: 5px;
+}
+.mr10{
+    margin-right: 10px;
+}
+.mb15{
+    margin-bottom: 15px;
+}
+.mr5{
+    margin-right: 5px;
+}
+.box .ibox{
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+.control-lable{
+    display: block;
+}
+.panel-title{
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+.panel-description{
+    font-size: 15px;
+}
