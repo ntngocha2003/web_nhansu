@@ -10,5 +10,5 @@ class Specialized extends Model
     protected $primaryKey='specializedId';
     public $timestamps=false;
     use HasFactory;
-    protected $fillable = ['nameSpecialized'];
+    protected $fillable = ['nameSpecialized','description'];
 }

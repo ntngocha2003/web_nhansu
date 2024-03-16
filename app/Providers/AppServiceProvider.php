@@ -8,16 +8,33 @@ use Illuminate\Support\Facades\Schema;;
 class AppServiceProvider extends ServiceProvider
 {
     public $bindings=[
-        'App\Services\Interfaces\Department\DepartmentServiceInterface'=>
-        'App\Services\Department\DepartmentService',
-
         'App\Repositories\Interfaces\BaseRepositoryInterface'=>
         'App\Repositories\BaseRepository',
 
         'App\Repositories\Interfaces\Department\DepartmentRepositoryInterface'=>
         'App\Repositories\Department\DepartmentRepository',
 
-        
+        'App\Repositories\Interfaces\Position\PositionRepositoryInterface'=>
+        'App\Repositories\Position\PositionRepository',
+
+        'App\Repositories\Interfaces\Specialized\SpecializedRepositoryInterface'=>
+        'App\Repositories\Specialized\SpecializedRepository',
+
+        'App\Repositories\Interfaces\Level\LevelRepositoryInterface'=>
+        'App\Repositories\Level\LevelRepository',
+
+        'App\Services\Interfaces\Department\DepartmentServiceInterface'=>
+        'App\Services\Department\DepartmentService',
+
+        'App\Services\Interfaces\Position\PositionServiceInterface'=>
+        'App\Services\Position\PositionService',
+
+        'App\Services\Interfaces\Specialized\SpecializedServiceInterface'=>
+        'App\Services\Specialized\SpecializedService',
+
+        'App\Services\Interfaces\Level\LevelServiceInterface'=>
+        'App\Services\Level\LevelService',
+       
     ];
     /**
      * Register any application services.
