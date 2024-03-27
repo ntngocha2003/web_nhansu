@@ -46,7 +46,7 @@ class ApiLevelController extends Controller
     }
 
     public function store(LevelStoreRequest $request){
-        if($this->levelService->create($request)){
+        if($this->levelService->create($request)==true){
 
             return response()->json([
                 'message'=>'Thêm mới trình độ thành công'

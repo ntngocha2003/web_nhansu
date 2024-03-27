@@ -46,7 +46,7 @@ class ApiPositionController extends Controller
     }
 
     public function store(PositionStoreRequest $request){
-        if($this->positionService->create($request)){
+        if($this->positionService->create($request)==true){
 
             return response()->json([
                 'message'=>'Thêm mới chức vụ thành công'

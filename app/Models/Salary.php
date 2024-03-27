@@ -10,5 +10,5 @@ class Salary extends Model
     protected $primaryKey='salaryId';
     public $timestamps=false;
     use HasFactory;
-    protected $fillable = ['namePosition'];
+    protected $fillable = ['salaryStep','basicSalary','coefficientsSalary','allowanceCoefficient'];
 }

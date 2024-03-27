@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Schema;;
 class AppServiceProvider extends ServiceProvider
 {
     public $bindings=[
+
+        // Repositories
+
         'App\Repositories\Interfaces\BaseRepositoryInterface'=>
         'App\Repositories\BaseRepository',
 
@@ -23,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\Interfaces\Level\LevelRepositoryInterface'=>
         'App\Repositories\Level\LevelRepository',
 
+        'App\Repositories\Interfaces\Salary\SalaryRepositoryInterface'=>
+        'App\Repositories\Salary\SalaryRepository',
+
+        // services
+
         'App\Services\Interfaces\Department\DepartmentServiceInterface'=>
         'App\Services\Department\DepartmentService',
 
@@ -34,6 +42,9 @@ class AppServiceProvider extends ServiceProvider
 
         'App\Services\Interfaces\Level\LevelServiceInterface'=>
         'App\Services\Level\LevelService',
+
+        'App\Services\Interfaces\Salary\SalaryServiceInterface'=>
+        'App\Services\Salary\SalaryService',
        
     ];
     /**
@@ -44,6 +55,10 @@ class AppServiceProvider extends ServiceProvider
         foreach($this->bindings as $key => $val){      
             $this->app->bind($key,$val);
         }
+
+        // Sanctum::getAccessTokenFromRequestUsing(function($request){
+        //     return $request->cookie('apiAuth_token');
+        // });
     }
 
     /**

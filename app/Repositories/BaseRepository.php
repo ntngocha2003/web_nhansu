@@ -14,17 +14,10 @@ class BaseRepository implements BaseRepositoryInterface{
     }
     
     public function pagination(
-        array $column=['*'],
-        array $condition=[],
-        array $join=[],
-        int $perpage=2
+        array $param=[],
     )
     {
-        $query=$this->model->select($column)->where($condition);
-        if(!(empty($join))){
-            $query->join(...$join);
-        }
-        return $query->paginate($perpage);
+       return $this->model->paginate($param['perpage']);
     }
 
     public function getAll(){
@@ -58,4 +51,13 @@ class BaseRepository implements BaseRepositoryInterface{
         return $this->model->select($column)->with($reletion)->findOrFail($modelId);
     }
 
+    public function findId($id){
+        if($this->model->find($id)){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
 }

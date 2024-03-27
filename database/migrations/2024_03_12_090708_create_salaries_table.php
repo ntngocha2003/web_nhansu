@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id('salaryId');
-            $table->integer('salaryLavel');
+            $table->integer('salaryStep');
             $table->integer('basicSalary');
             $table->integer('coefficientsSalary');
             $table->integer('allowanceCoefficient');

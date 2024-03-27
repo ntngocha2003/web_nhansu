@@ -5,6 +5,7 @@ namespace App\Http\Requests\Department;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 class DepartmentStoreRequest extends FormRequest
 {
     /**
@@ -23,7 +24,7 @@ class DepartmentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nameDepartment' => 'required',
+            'nameDepartment' => 'required|unique:departments',
             'description'=>'required'
         ];
     }
@@ -32,15 +33,17 @@ class DepartmentStoreRequest extends FormRequest
     {
         return [
             'nameDepartment.required'=>'Bạn chưa nhập tên phòng ban.',
+            'nameDepartment.unique'=>'Tên phòng ban này đã tồn tại trong hệ thống.',
             'description.required'=>'Bạn chưa nhập mô tả cho phòng ban.',
         ];
     }
-
-    public function failedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-            'success'=> false,
-            'message'=>'Validation errors',
-            'data'=>$validator->errors()
-        ]));
-    } 
+    
+    // public function failedValidation(Validator $validator){
+    //     throw new HttpResponseException(response()->json([
+    //         'status'=>422,
+    //         'success'=> false,
+    //         'message'=>'Validation errors',
+    //         'data'=>$validator->errors()
+    //     ]),422);
+    // } 
 }

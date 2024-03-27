@@ -46,7 +46,7 @@ class ApiSpecializedController extends Controller
     }
 
     public function store(SpecializedStoreRequest $request){
-        if($this->specializedService->create($request)){
+        if($this->specializedService->create($request)==true){
 
             return response()->json([
                 'message'=>'Thêm mới chuyên ngành thành công'

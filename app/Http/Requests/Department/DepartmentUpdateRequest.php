@@ -23,7 +23,7 @@ class DepartmentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nameDepartment' => 'required',
+            'nameDepartment' => 'required|unique:departments',
             'description'=>'required'
         ];
     }
@@ -32,15 +32,17 @@ class DepartmentUpdateRequest extends FormRequest
     {
         return [
             'nameDepartment.required'=>'Bạn chưa nhập tên phòng ban.',
+            'nameDepartment.unique'=>'Tên phòng ban này đã tồn tại trong hệ thống.',
             'description.required'=>'Bạn chưa nhập mô tả cho phòng ban.',
         ];
     }
 
     public function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json([
+            'status'=>422,
             'success'=> false,
             'message'=>'Validation errors',
             'data'=>$validator->errors()
-        ]));
+        ]),422);
     } 
 }

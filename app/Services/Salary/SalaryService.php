@@ -1,27 +1,29 @@
 <?php
-namespace App\Services\Department;
-use App\Services\Interfaces\Department\DepartmentServiceInterface;
+namespace App\Services\Salary;
+use App\Services\Interfaces\Salary\SalaryServiceInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
-use App\Models\Department;
-use App\Repositories\Interfaces\Department\DepartmentRepositoryInterface as DepartmentRepository;
+use App\Models\Salary;
+use App\Repositories\Interfaces\Salary\SalaryRepositoryInterface as SalaryRepository;
 use Illuminate\Support\Facades\Hash;
 
-class DepartmentService implements DepartmentServiceInterface{
+class SalaryService implements SalaryServiceInterface{
    
-    protected $departmentRepository;
+    protected $salaryRepository;
     public function __construct(
-        DepartmentRepository $departmentRepository
+        SalaryRepository $salaryRepository
     )
     {
-        $this->departmentRepository=$departmentRepository;
+        $this->salaryRepository=$salaryRepository;
     }
     public function paginate($request){
-        $get=$request->input();
-        $perpage=($get['perpage'])??5;
-        $department=$this->departmentRepository->pagination(['perpage'=>$perpage]);
-        return $department;
+       $salary=$this->salaryRepository->pagination([
+            'SalaryId',
+            'nameSalary',
+            'description'
+           ]);
+        return $salary;
        ;
     }
 
@@ -30,7 +32,7 @@ class DepartmentService implements DepartmentServiceInterface{
         DB::beginTransaction();
         try { 
             $create=$request->all();
-            $this->departmentRepository->create($create);
+            $this->salaryRepository->create($create);
             DB::commit();
             return true;
         } catch (Exception $e) {
@@ -44,9 +46,9 @@ class DepartmentService implements DepartmentServiceInterface{
         DB::beginTransaction();
         try { 
             $update=$request->all();
-            $this->departmentRepository->update($id,$update);
+            $this->salaryRepository->update($id,$update);
             DB::commit();
-                return true;
+            return true;
         } catch (Exception $e) {
             DB::rollBack();
             echo $e->getMessage();
@@ -57,9 +59,9 @@ class DepartmentService implements DepartmentServiceInterface{
     public function delete($id){
         DB::beginTransaction();
         try {
-            $this->departmentRepository->delete($id);
+            $this->salaryRepository->delete($id);
             DB::commit();
-            return true;         
+            return true;            
            
         } catch (Exception $e) {
             DB::rollBack();
@@ -72,7 +74,7 @@ class DepartmentService implements DepartmentServiceInterface{
         DB::beginTransaction();
         try {
             $ids=explode(',',$request->input('ids'));
-            $this->departmentRepository->deleteAll($ids);
+            $this->salaryRepository->deleteAll($ids);
             DB::commit();
             return true;            
            

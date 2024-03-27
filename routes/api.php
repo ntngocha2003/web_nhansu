@@ -7,6 +7,7 @@ use App\Http\Controllers\api\ApiDepartmentController;
 use App\Http\Controllers\api\ApiPositionController;
 use App\Http\Controllers\api\ApiSpecializedController;
 use App\Http\Controllers\api\ApiLevelController;
+use App\Http\Controllers\api\ApiSalaryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,14 +19,11 @@ use App\Http\Controllers\api\ApiLevelController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
-// login
-
-Route::post('login',[ApiAuthController::class,'login']);
-
+Route::middleware('auth:sanctum')->group(function(){
 // department
 
 Route::get('Departments',[ApiDepartmentController::class,'index']);
@@ -89,3 +87,27 @@ Route::put('updateLevel/{id}',[ApiLevelController::class,'update']) ;
 Route::delete('deleteLevel/{id}',[ApiLevelController::class,'delete'])->where(['id'=>'[0-9]+']);
 
 Route::delete('deleteLevelAll',[ApiLevelController::class,'deleteAll'])->where(['id'=>'[0-9]+']);
+
+// Salary
+
+Route::get('Salarys',[ApiSalaryController::class,'index']);
+
+Route::get('Salarys/{id}',[SalarylController::class,'show'])->where(['id'=>'[0-9]+']);
+
+Route::get('SalaryAll',[ApiSalaryController::class,'showAll']);
+
+Route::post('storeSalary',[ApiSalaryController::class,'store']);
+
+Route::put('updateSalary/{id}',[ApiSalaryController::class,'update']) ;
+
+Route::delete('deleteSalary/{id}',[ApiSalaryController::class,'delete'])->where(['id'=>'[0-9]+']);
+
+Route::delete('deleteSalaryAll',[ApiSalaryController::class,'deleteAll'])->where(['id'=>'[0-9]+']);
+
+// Employee
+
+});
+// login
+
+Route::post('login',[ApiAuthController::class,'login']);
+
