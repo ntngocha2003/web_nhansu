@@ -94,21 +94,23 @@ class ApiDepartmentController extends Controller
         }
         return response()->json([
             'message'=>'Có lỗi xảy ra khi thực hiện xóa phòng ban'
-        ],422);
+        ],500);
         
     }
 
-    public function deleteAll(Request $request){
-        if($this->departmentService->deleteAll($request)==true){
+    public function deleteMultiple(Request $request){
+        if($this->departmentService->deleteMultiple($request)==true){
             return response()->json([
                 'data'=>$this->departmentRepository->getAll(),
-                'message'=>'Xóa danh sách phòng ban thành công'
+                'message'=>'Xóa dữ liệu thành công'
 
             ],200);
         }
-        return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách phòng ban'
-        ],);
+        else{
+            return response()->json([
+                'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách phòng ban'
+            ],500);
+        }
         
     }
 }

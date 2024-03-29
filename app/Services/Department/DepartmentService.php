@@ -68,11 +68,11 @@ class DepartmentService implements DepartmentServiceInterface{
         }
     }
 
-    public function deleteAll($request){
+    public function deleteMultiple($request){
         DB::beginTransaction();
         try {
             $ids=explode(',',$request->input('ids'));
-            $this->departmentRepository->deleteAll($ids);
+            $this->departmentRepository->deleteMultiple($ids);
             DB::commit();
             return true;            
            

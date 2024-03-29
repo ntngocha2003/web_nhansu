@@ -39,7 +39,7 @@ class BaseRepository implements BaseRepositoryInterface{
         return $model->destroy($id);
     }
 
-    public function deleteAll(array $ids=[]){
+    public function deleteMultiple(array $ids=[]){
         return $this->model->whereIn('departmentId',$ids)->delete();
     }
 

@@ -28,17 +28,17 @@ Route::middleware('auth:sanctum')->group(function(){
 
 Route::get('Departments',[ApiDepartmentController::class,'index']);
 
-Route::get('Departments/{id}',[ApiDepartmentController::class,'show'])->where(['id'=>'[0-9]+']);
+Route::get('departments/{id}',[ApiDepartmentController::class,'show'])->where(['id'=>'[0-9]+']);
 
-Route::get('DepartmentAll',[ApiDepartmentController::class,'showAll']);
+Route::get('departmentAll',[ApiDepartmentController::class,'showAll']);
 
-Route::post('storeDepartment',[ApiDepartmentController::class,'store']);
+Route::post('department/store',[ApiDepartmentController::class,'store']);
 
-Route::put('updateDepartment/{id}',[ApiDepartmentController::class,'update']) ;
+Route::put('department/update/{id}',[ApiDepartmentController::class,'update']) ;
 
-Route::delete('deleteDepartment/{id}',[ApiDepartmentController::class,'delete'])->where(['id'=>'[0-9]+']);
+Route::delete('department/delete/{id}',[ApiDepartmentController::class,'delete'])->where(['id'=>'[0-9]+']);
 
-Route::delete('deleteDepartmentAll',[ApiDepartmentController::class,'deleteAll'])->where(['id'=>'[0-9]+']);
+Route::delete('department/deleteMultiple',[ApiDepartmentController::class,'deleteMultiple'])->where(['id'=>'[0-9]+']);
 
 // position
 
