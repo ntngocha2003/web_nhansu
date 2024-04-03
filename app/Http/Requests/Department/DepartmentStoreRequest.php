@@ -23,19 +23,23 @@ class DepartmentStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'nameDepartment' => 'required|unique:departments',
-            'description'=>'required'
+                'name' => 'required|unique:departments',
+                'description'=>'required'
         ];
+        
     }
 
     public function messages(): array
     {
-        return [
-            'nameDepartment.required'=>'Bạn chưa nhập tên phòng ban.',
-            'nameDepartment.unique'=>'Tên phòng ban này đã tồn tại trong hệ thống.',
-            'description.required'=>'Bạn chưa nhập mô tả cho phòng ban.',
-        ];
+       
+            return [
+                'name.required'=>'Bạn chưa nhập tên phòng ban.',
+                'name.unique'=>'Tên phòng ban này đã tồn tại trong hệ thống.',
+                'description.required'=>'Bạn chưa nhập mô tả cho phòng ban.',
+            ];
+
     }
     
     // public function failedValidation(Validator $validator){

@@ -23,22 +23,24 @@ class LevelUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nameLevel' => 'required',
+            'name' => 'required',
+            'description'=>'required'
         ];
     }
 
     public function messages(): array
     {
         return [
-            'nameLevel.required'=>'Bạn chưa nhập tên trình độ.',
+            'name.required'=>'Bạn chưa nhập tên trình độ.',
+            'description.required'=>'Bạn chưa nhập mô tả cho trình độ.',
         ];
     }
 
-    public function failedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-            'success'=> false,
-            'message'=>'Validation errors',
-            'data'=>$validator->errors()
-        ]));
-    } 
+    // public function failedValidation(Validator $validator){
+    //     throw new HttpResponseException(response()->json([
+    //         'success'=> false,
+    //         'message'=>'Validation errors',
+    //         'data'=>$validator->errors()
+    //     ]));
+    // } 
 }

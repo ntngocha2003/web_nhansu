@@ -4,11 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\QueryScope;
 
 class Position extends Model
 {
-    protected $primaryKey='positionId';
+    protected $primaryKey='id';
     public $timestamps=false;
-    use HasFactory;
-    protected $fillable = ['namePosition','description'];
+    use HasFactory,QueryScope;
+    protected $fillable = ['name','description'];
+
+    public function employees(){
+        return $this->hasMany(Employee::class,'positionId');
+    }
 }

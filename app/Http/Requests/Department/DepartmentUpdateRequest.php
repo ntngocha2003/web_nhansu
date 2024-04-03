@@ -23,7 +23,7 @@ class DepartmentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nameDepartment' => 'required|unique:departments',
+            'name' => 'required',
             'description'=>'required'
         ];
     }
@@ -31,8 +31,8 @@ class DepartmentUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nameDepartment.required'=>'Bạn chưa nhập tên phòng ban.',
-            'nameDepartment.unique'=>'Tên phòng ban này đã tồn tại trong hệ thống.',
+            'name.required'=>'Bạn chưa nhập tên phòng ban.',
+           
             'description.required'=>'Bạn chưa nhập mô tả cho phòng ban.',
         ];
     }

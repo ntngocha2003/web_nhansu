@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class DepartmentService implements DepartmentServiceInterface{
    
     protected $departmentRepository;
+    protected $fieldSearch=['name'];
     public function __construct(
         DepartmentRepository $departmentRepository
     )
@@ -18,11 +19,12 @@ class DepartmentService implements DepartmentServiceInterface{
         $this->departmentRepository=$departmentRepository;
     }
     public function paginate($request){
-        $get=$request->input();
-        $perpage=($get['perpage'])??5;
-        $department=$this->departmentRepository->pagination(['perpage'=>$perpage]);
+        $perpage=($request->input('perpage'))? $request->input('perpage'):10;
+        $condition=[
+            'keyword'=>$request->input('keyword')
+        ];
+        $department=$this->departmentRepository->pagination($perpage,$condition,$this->fieldSearch);
         return $department;
-       ;
     }
 
     public function create($request){
@@ -46,7 +48,7 @@ class DepartmentService implements DepartmentServiceInterface{
             $update=$request->all();
             $this->departmentRepository->update($id,$update);
             DB::commit();
-                return true;
+            return true;
         } catch (Exception $e) {
             DB::rollBack();
             echo $e->getMessage();

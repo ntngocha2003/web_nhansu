@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class SpecializedService implements SpecializedServiceInterface{
    
     protected $specializedRepository;
+    protected $fieldSearch=['name'];
     public function __construct(
         SpecializedRepository $specializedRepository
     )
@@ -18,13 +19,12 @@ class SpecializedService implements SpecializedServiceInterface{
         $this->specializedRepository=$specializedRepository;
     }
     public function paginate($request){
-       $specialized=$this->specializedRepository->pagination([
-            'specializedId',
-            'nameSpecialized',
-            'description'
-           ]);
+        $perpage=($request->input('perpage'))? $request->input('perpage'):10;
+        $condition=[
+            'keyword'=>$request->input('keyword')
+        ];
+        $specialized=$this->specializedRepository->pagination($perpage,$condition,$this->fieldSearch);
         return $specialized;
-       ;
     }
 
     public function create($request){
@@ -61,7 +61,7 @@ class SpecializedService implements SpecializedServiceInterface{
         try {
             $this->specializedRepository->delete($id);
             DB::commit();
-            return true;            
+            return true;         
            
         } catch (Exception $e) {
             DB::rollBack();
@@ -70,11 +70,11 @@ class SpecializedService implements SpecializedServiceInterface{
         }
     }
 
-    public function deleteAll($request){
+    public function deleteMultiple($request){
         DB::beginTransaction();
         try {
             $ids=explode(',',$request->input('ids'));
-            $this->specializedRepository->deleteAll($ids);
+            $this->specializedRepository->deleteMultiple($ids);
             DB::commit();
             return true;            
            

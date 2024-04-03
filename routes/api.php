@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
 Route::get('Departments',[ApiDepartmentController::class,'index']);
 
-Route::get('departments/{id}',[ApiDepartmentController::class,'show'])->where(['id'=>'[0-9]+']);
+Route::get('department/{id}',[ApiDepartmentController::class,'show'])->where(['id'=>'[0-9]+']);
 
 Route::get('departmentAll',[ApiDepartmentController::class,'showAll']);
 
@@ -44,49 +44,49 @@ Route::delete('department/deleteMultiple',[ApiDepartmentController::class,'delet
 
 Route::get('Positions',[ApiPositionController::class,'index']);
 
-Route::get('Positions/{id}',[ApiPositionController::class,'show'])->where(['id'=>'[0-9]+']);
+Route::get('position/{id}',[ApiPositionController::class,'show'])->where(['id'=>'[0-9]+']);
 
-Route::get('PositionAll',[ApiPositionController::class,'showAll']);
+Route::get('positionAll',[ApiPositionController::class,'showAll']);
 
-Route::post('storePosition',[ApiPositionController::class,'store']);
+Route::post('position/store',[ApiPositionController::class,'store']);
 
-Route::put('updatePosition/{id}',[ApiPositionController::class,'update']) ;
+Route::put('position/update/{id}',[ApiPositionController::class,'update']) ;
 
-Route::delete('deletePosition/{id}',[ApiPositionController::class,'delete'])->where(['id'=>'[0-9]+']);
+Route::delete('position/delete/{id}',[ApiPositionController::class,'delete'])->where(['id'=>'[0-9]+']);
 
-Route::delete('deletePositionAll',[ApiPositionController::class,'deleteAll'])->where(['id'=>'[0-9]+']);
+Route::delete('position/deleteMultiple',[ApiPositionController::class,'deleteMultiple'])->where(['id'=>'[0-9]+']);
 
 // Specialized
 
 Route::get('Specializeds',[ApiSpecializedController::class,'index']);
 
-Route::get('Specializeds/{id}',[ApiSpecializedController::class,'show'])->where(['id'=>'[0-9]+']);
+Route::get('specialized/{id}',[ApiSpecializedController::class,'show'])->where(['id'=>'[0-9]+']);
 
-Route::get('SpecializedAll',[ApiSpecializedController::class,'showAll']);
+Route::get('specializedAll',[ApiSpecializedController::class,'showAll']);
 
-Route::post('storeSpecialized',[ApiSpecializedController::class,'store']);
+Route::post('specialized/store',[ApiSpecializedController::class,'store']);
 
-Route::put('updateSpecialized/{id}',[ApiSpecializedController::class,'update']) ;
+Route::put('specialized/update/{id}',[ApiSpecializedController::class,'update']) ;
 
-Route::delete('deleteSpecialized/{id}',[ApiSpecializedController::class,'delete'])->where(['id'=>'[0-9]+']);
+Route::delete('specialized/delete/{id}',[ApiSpecializedController::class,'delete'])->where(['id'=>'[0-9]+']);
 
-Route::delete('deleteSpecializedAll',[ApiSpecializedController::class,'deleteAll'])->where(['id'=>'[0-9]+']);
+Route::delete('specialized/deleteMultiple',[ApiSpecializedController::class,'deleteMultiple'])->where(['id'=>'[0-9]+']);
 
 // Level
 
 Route::get('Levels',[ApiLevelController::class,'index']);
 
-Route::get('Levels/{id}',[ApiLevelController::class,'show'])->where(['id'=>'[0-9]+']);
+Route::get('level/{id}',[ApiLevelController::class,'show'])->where(['id'=>'[0-9]+']);
 
-Route::get('LevelAll',[ApiLevelController::class,'showAll']);
+Route::get('levelAll',[ApiLevelController::class,'showAll']);
 
-Route::post('storeLevel',[ApiLevelController::class,'store']);
+Route::post('level/store',[ApiLevelController::class,'store']);
 
-Route::put('updateLevel/{id}',[ApiLevelController::class,'update']) ;
+Route::put('level/update/{id}',[ApiLevelController::class,'update']) ;
 
-Route::delete('deleteLevel/{id}',[ApiLevelController::class,'delete'])->where(['id'=>'[0-9]+']);
+Route::delete('level/delete/{id}',[ApiLevelController::class,'delete'])->where(['id'=>'[0-9]+']);
 
-Route::delete('deleteLevelAll',[ApiLevelController::class,'deleteAll'])->where(['id'=>'[0-9]+']);
+Route::delete('level/deleteMultiple',[ApiLevelController::class,'deleteMultiple'])->where(['id'=>'[0-9]+']);
 
 // Salary
 

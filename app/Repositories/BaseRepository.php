@@ -13,11 +13,12 @@ class BaseRepository implements BaseRepositoryInterface{
         $this->model=$model;
     }
     
-    public function pagination(
-        array $param=[],
-    )
+    public function pagination( int $perpage=10,array $condition=[],array $fieldSearch=[])
     {
-       return $this->model->paginate($param['perpage']);
+       return $this->model
+       ->RelationKeyword(($condition['keyword'])??null,['name'])
+       ->RelationCount(['employees'])
+       ->paginate($perpage);
     }
 
     public function getAll(){
@@ -40,7 +41,7 @@ class BaseRepository implements BaseRepositoryInterface{
     }
 
     public function deleteMultiple(array $ids=[]){
-        return $this->model->whereIn('departmentId',$ids)->delete();
+        return $this->model->whereIn('id',$ids)->delete();
     }
 
     public function findById(
@@ -57,7 +58,6 @@ class BaseRepository implements BaseRepositoryInterface{
         }
         else{
             return false;
-        }
-        
+        }    
     }
 }

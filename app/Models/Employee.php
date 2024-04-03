@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use  HasFactory;
 
-    protected $primaryKey='idEmployee';
+    protected $primaryKey='employeeId';
     public $timestamps=false;
   
     protected $fillable = ['name', 'email', 'password', 'phone','age','address','identification','departmentId',
@@ -16,6 +16,6 @@ class Employee extends Model
 
 
     public function departments(){
-        return $this->belongsTo(Department::class,'departmentId');
+        return $this->belongsTo(Department::class,'id');
     }
 }

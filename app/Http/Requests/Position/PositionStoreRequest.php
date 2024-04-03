@@ -22,25 +22,30 @@ class PositionStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'namePosition' => 'required',
-            'description'=>'required'
+                'name' => 'required|unique:positions',
+                'description'=>'required'
         ];
+        
     }
 
     public function messages(): array
     {
-        return [
-            'namePosition.required'=>'Bạn chưa nhập tên chức vụ.',
-            'description.required'=>'Bạn chưa nhập mô tả cho chức vụ.',
-        ];
+       
+            return [
+                'name.required'=>'Bạn chưa nhập tên chức vụ.',
+                'name.unique'=>'Tên chức vụ này đã tồn tại trong hệ thống.',
+                'description.required'=>'Bạn chưa nhập mô tả cho chức vụ.',
+            ];
+
     }
 
-    public function failedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-            'success'=> false,
-            'message'=>'Validation errors',
-            'data'=>$validator->errors()
-        ]));
-    } 
+    // public function failedValidation(Validator $validator){
+    //     throw new HttpResponseException(response()->json([
+    //         'success'=> false,
+    //         'message'=>'Validation errors',
+    //         'data'=>$validator->errors()
+    //     ]));
+    // } 
 }

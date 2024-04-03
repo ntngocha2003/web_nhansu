@@ -4,11 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\QueryScope;
 
 class Specialized extends Model
 {
-    protected $primaryKey='specializedId';
+    protected $primaryKey='id';
     public $timestamps=false;
-    use HasFactory;
-    protected $fillable = ['nameSpecialized','description'];
+    use HasFactory,QueryScope;
+    protected $fillable = ['name','description'];
+
+    public function employees(){
+        return $this->hasMany(Employee::class,'specializedId');
+    }
 }

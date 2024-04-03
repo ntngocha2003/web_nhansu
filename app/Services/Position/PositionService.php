@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class PositionService implements PositionServiceInterface{
    
     protected $positionRepository;
+    protected $fieldSearch=['name'];
     public function __construct(
         PositionRepository $positionRepository
     )
@@ -18,13 +19,12 @@ class PositionService implements PositionServiceInterface{
         $this->positionRepository=$positionRepository;
     }
     public function paginate($request){
-       $position=$this->positionRepository->pagination([
-            'positionId',
-            'nameposition',
-            'description'
-           ]);
+        $perpage=($request->input('perpage'))? $request->input('perpage'):10;
+        $condition=[
+            'keyword'=>$request->input('keyword')
+        ];
+        $position=$this->positionRepository->pagination($perpage,$condition,$this->fieldSearch);
         return $position;
-       ;
     }
 
     public function create($request){
@@ -70,11 +70,11 @@ class PositionService implements PositionServiceInterface{
         }
     }
 
-    public function deleteAll($request){
+    public function deleteMultiple($request){
         DB::beginTransaction();
         try {
             $ids=explode(',',$request->input('ids'));
-            $this->positionRepository->deleteAll($ids);
+            $this->positionRepository->deleteMultiple($ids);
             DB::commit();
             return true;            
            

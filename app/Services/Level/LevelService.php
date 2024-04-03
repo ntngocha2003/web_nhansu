@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class LevelService implements LevelServiceInterface{
    
     protected $levelRepository;
+    protected $fieldSearch=['name'];
     public function __construct(
         LevelRepository $levelRepository
     )
@@ -18,12 +19,12 @@ class LevelService implements LevelServiceInterface{
         $this->levelRepository=$levelRepository;
     }
     public function paginate($request){
-       $level=$this->levelRepository->pagination([
-            'levelId',
-            'nameLevel',
-           ]);
+        $perpage=($request->input('perpage'))? $request->input('perpage'):10;
+        $condition=[
+            'keyword'=>$request->input('keyword')
+        ];
+        $level=$this->levelRepository->pagination($perpage,$condition,$this->fieldSearch);
         return $level;
-       ;
     }
 
     public function create($request){
@@ -60,7 +61,7 @@ class LevelService implements LevelServiceInterface{
         try {
             $this->levelRepository->delete($id);
             DB::commit();
-            return true;            
+            return true;         
            
         } catch (Exception $e) {
             DB::rollBack();
@@ -69,11 +70,11 @@ class LevelService implements LevelServiceInterface{
         }
     }
 
-    public function deleteAll($request){
+    public function deleteMultiple($request){
         DB::beginTransaction();
         try {
             $ids=explode(',',$request->input('ids'));
-            $this->levelRepository->deleteAll($ids);
+            $this->levelRepository->deleteMultiple($ids);
             DB::commit();
             return true;            
            

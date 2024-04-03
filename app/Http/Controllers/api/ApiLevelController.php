@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -25,23 +24,26 @@ class ApiLevelController extends Controller
     public function index(Request $request){
         $level=$this->levelService->paginate($request);
         return response()->json([
-            'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$level
+            'status'=>200,
+            'data'=>$level,
+            'message'=>'Truy vấn dữ liệu thành công'
         ],200);
     }
  
     public function show($id){
         $level=$this->levelRepository->findById($id);
-        $leveltItem= new LevelResource($level);
+        $levelItem= new LevelResource($level);
         return response()->json([
-            'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$leveltItem
+            'status'=>200,
+            'data'=>$levelItem,
+            'message'=>'Truy vấn dữ liệu thành công'
         ],200);
     }
     public function showAll(){
         return response()->json([
+            'status'=>200,
+            'data'=>$this->levelRepository->getAll(),
             'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$this->levelRepository->getAll()
         ],200);
     }
 
@@ -49,46 +51,64 @@ class ApiLevelController extends Controller
         if($this->levelService->create($request)==true){
 
             return response()->json([
+                'status'=>200,
+                'data'=>$this->levelRepository->getAll(),
                 'message'=>'Thêm mới trình độ thành công'
-            ],200);
+            ]);
         }
+        
         return response()->json([
             'message'=>'Có lỗi xảy ra khi thực hiện thêm trình độ'
-        ]);
+        ],500);
     }
 
-    public function update($id,LevelUpdateRequest $request){      
-        if($this->levelService->update($id,$request)==true){
+    public function update($id,LevelUpdateRequest $request){ 
+
+        if($this->levelRepository->findId($id)===false){
+            return 'not found';
+        }
+        else if($this->levelService->update($id,$request)==true){
             return response()->json([
+                'status'=>200,
+                'data'=>$this->levelRepository->findById($id),
                 'message'=>'Cập nhật trình độ thành công'
             ],200);
         }
         return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện cập nhật trình độ'
-        ]);
+            'message'=>'Có lỗi xảy ra khi thực hiện cập nhật'
+        ],500);
     }
 
     public function delete($id){
-        if($this->levelService->delete($id)==true){
+        if($this->levelRepository->findId($id)===false){
+            return 'not found';
+        }
+        else if($this->levelService->delete($id)==true){
             return response()->json([
+                'status'=>200,
+                'data'=>$this->levelRepository->getAll(),
                 'message'=>'Xóa trình độ thành công'
             ],200);
         }
         return response()->json([
             'message'=>'Có lỗi xảy ra khi thực hiện xóa trình độ'
-        ]);
+        ],500);
         
     }
 
-    public function deleteAll(Request $request){
-        if($this->levelService->deleteAll($request)==true){
+    public function deleteMultiple(Request $request){
+        if($this->levelService->deleteMultiple($request)==true){
             return response()->json([
-                'message'=>'Xóa danh sách trình độ thành công'
+                'data'=>$this->levelRepository->getAll(),
+                'message'=>'Xóa dữ liệu thành công'
+
             ],200);
         }
-        return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách trình độ'
-        ]);
+        else{
+            return response()->json([
+                'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách trình độ'
+            ],500);
+        }
         
     }
 }

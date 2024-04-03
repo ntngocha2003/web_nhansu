@@ -61,7 +61,7 @@ class ApiDepartmentController extends Controller
         
         return response()->json([
             'message'=>'Có lỗi xảy ra khi thực hiện thêm phòng ban'
-        ],422);
+        ],500);
     }
 
     public function update($id,DepartmentUpdateRequest $request){ 
@@ -78,7 +78,7 @@ class ApiDepartmentController extends Controller
         }
         return response()->json([
             'message'=>'Có lỗi xảy ra khi thực hiện cập nhật'
-        ],422);
+        ],500);
     }
 
     public function delete($id){

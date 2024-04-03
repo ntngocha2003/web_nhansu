@@ -23,25 +23,28 @@ class ApiPositionController extends Controller
     }
 
     public function index(Request $request){
-        $position=$this->positionService->paginate($request);
+    $position=$this->positionService->paginate($request);
         return response()->json([
-            'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$position
+            'status'=>200,
+            'data'=>$position,
+            'message'=>'Truy vấn dữ liệu thành công'
         ],200);
     }
  
     public function show($id){
         $position=$this->positionRepository->findById($id);
-        $positiontItem= new PositionResource($position);
+        $positionItem= new PositionResource($position);
         return response()->json([
-            'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$positiontItem
+            'status'=>200,
+            'data'=>$positionItem,
+            'message'=>'Truy vấn dữ liệu thành công'
         ],200);
     }
     public function showAll(){
         return response()->json([
+            'status'=>200,
+            'data'=>$this->positionRepository->getAll(),
             'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$this->positionRepository->getAll()
         ],200);
     }
 
@@ -49,46 +52,64 @@ class ApiPositionController extends Controller
         if($this->positionService->create($request)==true){
 
             return response()->json([
+                'status'=>200,
+                'data'=>$this->positionRepository->getAll(),
                 'message'=>'Thêm mới chức vụ thành công'
-            ],200);
+            ]);
         }
+        
         return response()->json([
             'message'=>'Có lỗi xảy ra khi thực hiện thêm chức vụ'
-        ]);
+        ],500);
     }
 
-    public function update($id,PositionUpdateRequest $request){      
-        if($this->positionService->update($id,$request)==true){
+    public function update($id,PositionUpdateRequest $request){ 
+
+        if($this->positionRepository->findId($id)===false){
+            return 'not found';
+        }
+        else if($this->positionService->update($id,$request)==true){
             return response()->json([
+                'status'=>200,
+                'data'=>$this->positionRepository->findById($id),
                 'message'=>'Cập nhật chức vụ thành công'
             ],200);
         }
         return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện cập nhật chức vụ'
-        ]);
+            'message'=>'Có lỗi xảy ra khi thực hiện cập nhật'
+        ],500);
     }
 
     public function delete($id){
-        if($this->positionService->delete($id)==true){
+        if($this->positionRepository->findId($id)===false){
+            return 'not found';
+        }
+        else if($this->positionService->delete($id)==true){
             return response()->json([
+                'status'=>200,
+                'data'=>$this->positionRepository->getAll(),
                 'message'=>'Xóa chức vụ thành công'
             ],200);
         }
         return response()->json([
             'message'=>'Có lỗi xảy ra khi thực hiện xóa chức vụ'
-        ]);
+        ],500);
         
     }
 
-    public function deleteAll(Request $request){
-        if($this->positionService->deleteAll($request)==true){
+    public function deleteMultiple(Request $request){
+        if($this->positionService->deleteMultiple($request)==true){
             return response()->json([
-                'message'=>'Xóa danh sách chức vụ thành công'
+                'data'=>$this->positionRepository->getAll(),
+                'message'=>'Xóa dữ liệu thành công'
+
             ],200);
         }
-        return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách chức vụ'
-        ]);
+        else{
+            return response()->json([
+                'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách phòng ban'
+            ],500);
+        }
         
     }
 }

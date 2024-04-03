@@ -25,23 +25,26 @@ class ApiSpecializedController extends Controller
     public function index(Request $request){
         $specialized=$this->specializedService->paginate($request);
         return response()->json([
-            'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$specialized
+            'status'=>200,
+            'data'=>$specialized,
+            'message'=>'Truy vấn dữ liệu thành công'
         ],200);
     }
  
     public function show($id){
         $specialized=$this->specializedRepository->findById($id);
-        $specializedtItem= new SpecializedResource($specialized);
+        $specializedItem= new LevelResource($specialized);
         return response()->json([
-            'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$specializedtItem
+            'status'=>200,
+            'data'=>$specializedItem,
+            'message'=>'Truy vấn dữ liệu thành công'
         ],200);
     }
     public function showAll(){
         return response()->json([
+            'status'=>200,
+            'data'=>$this->specializedRepository->getAll(),
             'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$this->specializedRepository->getAll()
         ],200);
     }
 
@@ -49,46 +52,64 @@ class ApiSpecializedController extends Controller
         if($this->specializedService->create($request)==true){
 
             return response()->json([
-                'message'=>'Thêm mới chuyên ngành thành công'
-            ],200);
+                'status'=>200,
+                'data'=>$this->specializedRepository->getAll(),
+                'message'=>'Thêm mới trình độ thành công'
+            ]);
         }
+        
         return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện thêm chuyên ngành'
-        ]);
+            'message'=>'Có lỗi xảy ra khi thực hiện thêm trình độ'
+        ],500);
     }
 
-    public function update($id,SpecializedUpdateRequest $request){      
-        if($this->specializedService->update($id,$request)==true){
+    public function update($id,SpecializedUpdateRequest $request){ 
+
+        if($this->specializedRepository->findId($id)===false){
+            return 'not found';
+        }
+        else if($this->specializedService->update($id,$request)==true){
             return response()->json([
-                'message'=>'Cập nhật chuyên ngành thành công'
+                'status'=>200,
+                'data'=>$this->specializedRepository->findById($id),
+                'message'=>'Cập nhật trình độ thành công'
             ],200);
         }
         return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện cập nhật chuyên ngành'
-        ]);
+            'message'=>'Có lỗi xảy ra khi thực hiện cập nhật'
+        ],500);
     }
 
     public function delete($id){
-        if($this->specializedService->delete($id)==true){
+        if($this->specializedRepository->findId($id)===false){
+            return 'not found';
+        }
+        else if($this->specializedService->delete($id)==true){
             return response()->json([
-                'message'=>'Xóa chuyên ngành thành công'
+                'status'=>200,
+                'data'=>$this->specializedRepository->getAll(),
+                'message'=>'Xóa trình độ thành công'
             ],200);
         }
         return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện xóa chuyên ngành'
-        ]);
+            'message'=>'Có lỗi xảy ra khi thực hiện xóa trình độ'
+        ],500);
         
     }
 
-    public function deleteAll(Request $request){
-        if($this->specializedService->deleteAll($request)==true){
+    public function deleteMultiple(Request $request){
+        if($this->specializedService->deleteMultiple($request)==true){
             return response()->json([
-                'message'=>'Xóa danh sách chuyên ngành thành công'
+                'data'=>$this->specializedRepository->getAll(),
+                'message'=>'Xóa dữ liệu thành công'
+
             ],200);
         }
-        return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách chuyên ngành'
-        ]);
+        else{
+            return response()->json([
+                'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách trình độ'
+            ],500);
+        }
         
     }
 }

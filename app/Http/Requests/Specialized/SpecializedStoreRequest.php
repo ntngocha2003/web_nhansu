@@ -22,25 +22,30 @@ class SpecializedStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'nameSpecialized' => 'required',
-            'description'=>'required'
+                'name' => 'required|unique:specializeds',
+                'description'=>'required'
         ];
+        
     }
 
     public function messages(): array
     {
-        return [
-            'nameSpecialized.required'=>'Bạn chưa nhập tên trình độ.',
-            'description.required'=>'Bạn chưa nhập mô tả cho trình độ.',
-        ];
+       
+            return [
+                'name.required'=>'Bạn chưa nhập tên chuyên ngành.',
+                'name.unique'=>'Tên chuyên ngành này đã tồn tại trong hệ thống.',
+                'description.required'=>'Bạn chưa nhập mô tả cho chuyên ngành.',
+            ];
+
     }
 
-    public function failedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-            'success'=> false,
-            'message'=>'Validation errors',
-            'data'=>$validator->errors()
-        ]));
-    } 
+    // public function failedValidation(Validator $validator){
+    //     throw new HttpResponseException(response()->json([
+    //         'success'=> false,
+    //         'message'=>'Validation errors',
+    //         'data'=>$validator->errors()
+    //     ]));
+    // } 
 }

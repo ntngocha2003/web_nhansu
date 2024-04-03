@@ -22,23 +22,30 @@ class LevelStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'nameLevel' => 'required',
+                'name' => 'required|unique:levels',
+                'description'=>'required'
         ];
+        
     }
 
     public function messages(): array
     {
-        return [
-            'nameLevel.required'=>'Bạn chưa nhập tên trình độ.',
-        ];
+       
+            return [
+                'name.required'=>'Bạn chưa nhập tên trình độ.',
+                'name.unique'=>'Tên trình độ này đã tồn tại trong hệ thống.',
+                'description.required'=>'Bạn chưa nhập mô tả cho trình độ.',
+            ];
+
     }
 
-    public function failedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-            'success'=> false,
-            'message'=>'Validation errors',
-            'data'=>$validator->errors()
-        ]));
-    } 
+    // public function failedValidation(Validator $validator){
+    //     throw new HttpResponseException(response()->json([
+    //         'success'=> false,
+    //         'message'=>'Validation errors',
+    //         'data'=>$validator->errors()
+    //     ]));
+    // } 
 }
