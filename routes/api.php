@@ -92,17 +92,17 @@ Route::delete('level/deleteMultiple',[ApiLevelController::class,'deleteMultiple'
 
 Route::get('Salarys',[ApiSalaryController::class,'index']);
 
-Route::get('Salarys/{id}',[SalarylController::class,'show'])->where(['id'=>'[0-9]+']);
+Route::get('salary/{id}',[ApiSalaryController::class,'show'])->where(['id'=>'[0-9]+']);
 
 Route::get('SalaryAll',[ApiSalaryController::class,'showAll']);
 
-Route::post('storeSalary',[ApiSalaryController::class,'store']);
+Route::post('salary/store',[ApiSalaryController::class,'store']);
 
-Route::put('updateSalary/{id}',[ApiSalaryController::class,'update']) ;
+Route::put('salary/update/{id}',[ApiSalaryController::class,'update']) ;
 
-Route::delete('deleteSalary/{id}',[ApiSalaryController::class,'delete'])->where(['id'=>'[0-9]+']);
+Route::delete('salary/delete/{id}',[ApiSalaryController::class,'delete'])->where(['id'=>'[0-9]+']);
 
-Route::delete('deleteSalaryAll',[ApiSalaryController::class,'deleteAll'])->where(['id'=>'[0-9]+']);
+Route::delete('salary/deleteMultiple',[ApiSalaryController::class,'deleteMultiple'])->where(['id'=>'[0-9]+']);
 
 // Employee
 

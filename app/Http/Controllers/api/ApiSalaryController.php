@@ -25,23 +25,26 @@ class ApiSalaryController extends Controller
     public function index(Request $request){
         $salary=$this->salaryService->paginate($request);
         return response()->json([
-            'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$salary
+            'status'=>200,
+            'data'=>$salary,
+            'message'=>'Truy vấn dữ liệu thành công'
         ],200);
     }
  
     public function show($id){
         $salary=$this->salaryRepository->findById($id);
-        $salarytItem= new SalaryResource($salary);
+        $salaryItem= new SalaryResource($salary);
         return response()->json([
-            'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$salarytItem
+            'status'=>200,
+            'data'=>$salaryItem,
+            'message'=>'Truy vấn dữ liệu thành công'
         ],200);
     }
     public function showAll(){
         return response()->json([
+            'status'=>200,
+            'data'=>$this->salaryRepository->getAll(),
             'message'=>'Truy vấn dữ liệu thành công',
-            'data'=>$this->salaryRepository->getAll()
         ],200);
     }
 
@@ -49,46 +52,64 @@ class ApiSalaryController extends Controller
         if($this->salaryService->create($request)==true){
 
             return response()->json([
-                'message'=>'Thêm mới lương thành công'
-            ],200);
+                'status'=>200,
+                'data'=>$this->salaryRepository->getAll(),
+                'message'=>'Thêm mới trình độ thành công'
+            ]);
         }
+        
         return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện thêm lương'
-        ]);
+            'message'=>'Có lỗi xảy ra khi thực hiện thêm trình độ'
+        ],500);
     }
 
-    public function update($id,SalaryUpdateRequest $request){      
-        if($this->salaryService->update($id,$request)==true){
+    public function update($id,SalaryUpdateRequest $request){ 
+
+        if($this->salaryRepository->findId($id)===false){
+            return 'not found';
+        }
+        else if($this->salaryService->update($id,$request)==true){
             return response()->json([
-                'message'=>'Cập nhật lương thành công'
+                'status'=>200,
+                'data'=>$this->salaryRepository->findById($id),
+                'message'=>'Cập nhật trình độ thành công'
             ],200);
         }
         return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện cập nhật lương'
-        ]);
+            'message'=>'Có lỗi xảy ra khi thực hiện cập nhật'
+        ],500);
     }
 
     public function delete($id){
-        if($this->salaryService->delete($id)==true){
+        if($this->salaryRepository->findId($id)===false){
+            return 'not found';
+        }
+        else if($this->salaryService->delete($id)==true){
             return response()->json([
-                'message'=>'Xóa lương thành công'
+                'status'=>200,
+                'data'=>$this->salaryRepository->getAll(),
+                'message'=>'Xóa trình độ thành công'
             ],200);
         }
         return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện xóa lương'
-        ]);
+            'message'=>'Có lỗi xảy ra khi thực hiện xóa trình độ'
+        ],500);
         
     }
 
-    public function deleteAll(Request $request){
-        if($this->salaryService->deleteAll($request)==true){
+    public function deleteMultiple(Request $request){
+        if($this->salaryService->deleteMultiple($request)==true){
             return response()->json([
-                'message'=>'Xóa danh sách lương thành công'
+                'data'=>$this->salaryRepository->getAll(),
+                'message'=>'Xóa dữ liệu thành công'
+
             ],200);
         }
-        return response()->json([
-            'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách lương'
-        ]);
+        else{
+            return response()->json([
+                'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách trình độ'
+            ],500);
+        }
         
     }
 }

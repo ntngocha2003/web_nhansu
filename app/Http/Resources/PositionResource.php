@@ -16,6 +16,7 @@ class PositionResource extends JsonResource
     {
         return [
             'id'=>$this->id,
+            'departmentId'=>$this->departmentId,
             'name'=>$this->name,
             'description'=>$this->description,
             'employees_count'=>$this->employees_count

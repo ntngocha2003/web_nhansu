@@ -11,7 +11,7 @@ class Specialized extends Model
     protected $primaryKey='id';
     public $timestamps=false;
     use HasFactory,QueryScope;
-    protected $fillable = ['name','description'];
+    protected $fillable = ['levelId','name','description'];
 
     public function employees(){
         return $this->hasMany(Employee::class,'specializedId');

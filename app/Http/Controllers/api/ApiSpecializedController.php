@@ -33,7 +33,7 @@ class ApiSpecializedController extends Controller
  
     public function show($id){
         $specialized=$this->specializedRepository->findById($id);
-        $specializedItem= new LevelResource($specialized);
+        $specializedItem= new SpecializedResource($specialized);
         return response()->json([
             'status'=>200,
             'data'=>$specializedItem,

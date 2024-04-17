@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Salary extends Model
 {
-    protected $primaryKey='salaryId';
+    protected $primaryKey='id';
     public $timestamps=false;
     use HasFactory;
     protected $fillable = ['salaryStep','basicSalary','coefficientsSalary','allowanceCoefficient'];

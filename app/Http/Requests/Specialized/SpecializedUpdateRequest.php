@@ -23,7 +23,7 @@ class SpecializedUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nameSpecialized' => 'required',
+            'name' => 'required',
             'description'=>'required'
         ];
     }
@@ -31,16 +31,16 @@ class SpecializedUpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nameSpecialized.required'=>'Bạn chưa nhập tên trình độ.',
-            'description.required'=>'Bạn chưa nhập mô tả cho trình độ.',
+            'name.required'=>'Bạn chưa nhập tên chuyên ngành.',
+            'description.required'=>'Bạn chưa nhập mô tả cho chuyên ngành.',
         ];
     }
 
-    public function failedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-            'success'=> false,
-            'message'=>'Validation errors',
-            'data'=>$validator->errors()
-        ]));
-    } 
+    // public function failedValidation(Validator $validator){
+    //     throw new HttpResponseException(response()->json([
+    //         'success'=> false,
+    //         'message'=>'Validation errors',
+    //         'data'=>$validator->errors()
+    //     ]));
+    // } 
 }

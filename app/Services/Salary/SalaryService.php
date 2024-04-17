@@ -18,13 +18,10 @@ class SalaryService implements SalaryServiceInterface{
         $this->salaryRepository=$salaryRepository;
     }
     public function paginate($request){
-       $salary=$this->salaryRepository->pagination([
-            'SalaryId',
-            'nameSalary',
-            'description'
-           ]);
+        $perpage=($request->input('perpage'))? $request->input('perpage'):10;
+       
+        $salary=$this->salaryRepository->paginate($perpage);
         return $salary;
-       ;
     }
 
     public function create($request){
@@ -61,7 +58,7 @@ class SalaryService implements SalaryServiceInterface{
         try {
             $this->salaryRepository->delete($id);
             DB::commit();
-            return true;            
+            return true;         
            
         } catch (Exception $e) {
             DB::rollBack();
@@ -70,11 +67,11 @@ class SalaryService implements SalaryServiceInterface{
         }
     }
 
-    public function deleteAll($request){
+    public function deleteMultiple($request){
         DB::beginTransaction();
         try {
             $ids=explode(',',$request->input('ids'));
-            $this->salaryRepository->deleteAll($ids);
+            $this->salaryRepository->deleteMultiple($ids);
             DB::commit();
             return true;            
            

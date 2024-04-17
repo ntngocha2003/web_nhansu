@@ -16,6 +16,7 @@ class SpecializedResource extends JsonResource
     {
         return [
             'id'=>$this->id,
+            'levelId'=>$this->levelId,
             'name'=>$this->name,
             'description'=>$this->description,
             'employees_count'=>$this->employees_count

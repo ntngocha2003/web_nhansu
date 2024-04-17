@@ -21,6 +21,12 @@ class BaseRepository implements BaseRepositoryInterface{
        ->paginate($perpage);
     }
 
+    public function paginate( int $perpage=10)
+    {
+       return $this->model
+       ->paginate($perpage);
+    }
+
     public function getAll(){
         return  $this->model::all();
     }
