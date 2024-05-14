@@ -29,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
         'App\Repositories\Interfaces\Salary\SalaryRepositoryInterface'=>
         'App\Repositories\Salary\SalaryRepository',
 
+        'App\Repositories\Interfaces\Employee\EmployeeRepositoryInterface'=>
+        'App\Repositories\Employee\EmployeeRepository',
+
         // services
 
         'App\Services\Interfaces\Department\DepartmentServiceInterface'=>
@@ -46,7 +49,9 @@ class AppServiceProvider extends ServiceProvider
         'App\Services\Interfaces\Salary\SalaryServiceInterface'=>
         'App\Services\Salary\SalaryService',
        
-    ];
+        'App\Services\Interfaces\Employee\EmployeeServiceInterface'=>
+        'App\Services\Employee\EmployeeService',
+           ];
     /**
      * Register any application services.
      */

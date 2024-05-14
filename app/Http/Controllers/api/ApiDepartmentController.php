@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Resources\DepartmentResource;
 use App\Services\Interfaces\Department\DepartmentServiceInterface as DepartmentService;
 use App\Repositories\Interfaces\Department\DepartmentRepositoryInterface as DepartmentRepository;
+use App\Repositories\Interfaces\Position\PositionRepositoryInterface as PositionRepository;
 use App\Http\Requests\Department\DepartmentStoreRequest;
 use App\Http\Requests\Department\DepartmentUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -15,12 +16,16 @@ use Illuminate\Contracts\Validation\Validator;
 class ApiDepartmentController extends Controller
 {
     protected $departmentService;
+    protected $departmentRepository;
+    protected $positionRepository;
     public function __construct(
         DepartmentService $departmentService,
-        DepartmentRepository $departmentRepository
+        DepartmentRepository $departmentRepository,
+        PositionRepository $positionRepository
     ){
         $this->departmentService= $departmentService;
         $this->departmentRepository= $departmentRepository;
+        $this->positionRepository= $positionRepository;
     }
 
     public function index(Request $request){
@@ -112,6 +117,17 @@ class ApiDepartmentController extends Controller
             ],500);
         }
         
+    }
+
+    public function showPositiontoId(Request $request){
+        $position=[];
+        $repository=($request->input('relation')=='positions')? 'departmentRepository':'positionRepository';
+        $model=$this->{$repository}->findById($request->input('id'),['id','name'],[$request->input('relation')]);
+        
+        return response()->json([
+            'message'=>'Truy xuất dữ liệu thành công',
+            'data'=>$model->{$request->input('relation')}
+        ],200);
     }
 }
     

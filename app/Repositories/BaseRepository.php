@@ -27,6 +27,13 @@ class BaseRepository implements BaseRepositoryInterface{
        ->paginate($perpage);
     }
 
+    public function paginate2( int $perpage=10,array $condition=[],array $fieldSearch=[])
+    {
+       return $this->model
+       ->RelationKeyword(($condition['keyword'])??null,['name'])
+       ->paginate($perpage);
+    }
+
     public function getAll(){
         return  $this->model::all();
     }
@@ -53,9 +60,9 @@ class BaseRepository implements BaseRepositoryInterface{
     public function findById(
         int $modelId,
         array $column=['*'],
-        array $reletion=[]
+        array $relation=[]
         ){
-        return $this->model->select($column)->with($reletion)->findOrFail($modelId);
+        return $this->model->select($column)->with($relation)->findOrFail($modelId);
     }
 
     public function findId($id){

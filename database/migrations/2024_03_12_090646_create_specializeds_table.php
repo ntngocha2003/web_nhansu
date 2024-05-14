@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('specializeds', function (Blueprint $table) {
             $table->id('specializedId');
             $table->string('nameSpecialized',50);
+            $table->string('description',500);
         });
     }
 

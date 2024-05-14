@@ -6,6 +6,7 @@ use Illuminate\Http\Response;
 use App\Http\Resources\LevelResource;
 use App\Services\Interfaces\Level\LevelServiceInterface as LevelService;
 use App\Repositories\Interfaces\Level\LevelRepositoryInterface as LevelRepository;
+use App\Repositories\Interfaces\Specialized\SpecializedRepositoryInterface as SpecializedRepository;
 use App\Http\Requests\Level\LevelStoreRequest;
 use App\Http\Requests\Level\LevelUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -13,12 +14,17 @@ use Illuminate\Http\RedirectResponse;
 class ApiLevelController extends Controller
 {
     protected $levelService;
+    protected $levelRepository;
+    protected $specializedRepository;
+
     public function __construct(
         LevelService $levelService,
-        LevelRepository $levelRepository
+        LevelRepository $levelRepository,
+        SpecializedRepository $specializedRepository
     ){
         $this->levelService= $levelService;
         $this->levelRepository= $levelRepository;
+        $this->specializedRepository=$specializedRepository;
     }
 
     public function index(Request $request){
@@ -110,5 +116,16 @@ class ApiLevelController extends Controller
             ],500);
         }
         
+    }
+
+    public function showSpecializedToId(Request $request){
+        $specialized=[];
+        $repository=($request->input('relation')=='specializeds')? 'levelRepository':'specializedRepository';
+        $model=$this->{$repository}->findById($request->input('id'),['id','name'],[$request->input('relation')]);
+        
+        return response()->json([
+            'message'=>'Truy xuất dữ liệu thành công',
+            'data'=>$model->{$request->input('relation')}
+        ],200);
     }
 }

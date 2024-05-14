@@ -16,4 +16,8 @@ class Position extends Model
     public function employees(){
         return $this->hasMany(Employee::class,'positionId');
     }
+
+    public function department(){
+        return $this->beloginTo(Department::class,'departmentId','id');
+    }
 }

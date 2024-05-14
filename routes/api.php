@@ -8,6 +8,7 @@ use App\Http\Controllers\api\ApiPositionController;
 use App\Http\Controllers\api\ApiSpecializedController;
 use App\Http\Controllers\api\ApiLevelController;
 use App\Http\Controllers\api\ApiSalaryController;
+use App\Http\Controllers\api\ApiEmployeeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -105,7 +106,24 @@ Route::delete('salary/delete/{id}',[ApiSalaryController::class,'delete'])->where
 Route::delete('salary/deleteMultiple',[ApiSalaryController::class,'deleteMultiple'])->where(['id'=>'[0-9]+']);
 
 // Employee
+Route::get('Employees',[ApiEmployeeController::class,'index']);
 
+Route::get('employee/{id}',[ApiEmployeeController::class,'show'])->where(['id'=>'[0-9]+']);
+
+Route::get('EmployeeAll',[ApiEmployeeController::class,'showAll']);
+
+Route::post('employee/store',[ApiEmployeeController::class,'store']);
+
+Route::put('employee/update/{id}',[ApiEmployeeController::class,'update']) ;
+
+Route::delete('employee/delete/{id}',[ApiEmployeeController::class,'delete'])->where(['id'=>'[0-9]+']);
+
+Route::delete('employee/deleteMultiple',[ApiEmployeeController::class,'deleteMultiple'])->where(['id'=>'[0-9]+']);
+
+
+// Location
+Route::get('positions',[ApiDepartmentController::class,'showPositiontoId']);
+Route::get('specializeds',[ApiLevelController::class,'showSpecializedToId']);
 });
 // login
 

@@ -107,11 +107,13 @@ class ApiPositionController extends Controller
         }
         else{
             return response()->json([
-                'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách phòng ban'
+                'message'=>'Có lỗi xảy ra khi thực hiện xóa danh sách chức vụ'
             ],500);
         }
         
     }
+
+    
 }
     
 
